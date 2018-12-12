@@ -52,6 +52,18 @@ describe FactoryBot::Definition do
     end
   end
 
+  describe "defining enum traits" do
+    it "maintains a list of enum fields" do
+      definition = described_class.new(:name)
+
+      enum_field = double("enum_field")
+
+      definition.register_enum(enum_field)
+
+      expect(definition.registered_enums).to include(enum_field)
+    end
+  end
+
   describe "adding callbacks" do
     let(:callback_1) { "callback1" }
     let(:callback_2) { "callback2" }
@@ -62,6 +74,7 @@ describe FactoryBot::Definition do
       expect(subject.callbacks).to eq [callback_1, callback_2]
     end
   end
+
 
   describe "#to_create" do
     its(:to_create) { should be_nil }
