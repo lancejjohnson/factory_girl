@@ -57,6 +57,20 @@ module FactoryBot
       end
     end
 
+    def expand_enum_traits(class_const)
+      registered_enums.each do |enum_field|
+        enum_traits = class_const.send(enum_field.name.to_s.pluralize)
+        enum_traits.each do |trait_name, trait_value|
+          trait = Trait.new(trait_name) do
+            add_attribute(enum_field.name) do
+              trait_value
+            end
+          end
+          define_trait(trait)
+        end
+      end
+    end
+
     def overridable
       declarations.overridable
       self

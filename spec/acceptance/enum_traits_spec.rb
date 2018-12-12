@@ -10,10 +10,10 @@ describe "enum traits" do
       end
     end
 
-    Task.statuses.each do |trait_name, database_value|
+    Task.statuses.each_key do |trait_name|
       task = FactoryBot.build(:task, trait_name)
 
-      expect(task.send(trait_name)).to eq(database_value)
+      expect(task.status).to eq(trait_name)
     end
   end
 end
